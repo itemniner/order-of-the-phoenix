@@ -1,0 +1,10 @@
+<h1>House of <%= @members[0][:house]  %></h1>
+<h3><%= @members.count %> members are in the Order of the Phoenix.</h3>
+<% @members.each do |member| %>
+<section class="members-<%=member[:name]%>">
+  <%= member[:name] %>
+  <%= member[:role] %>
+  <%= member[:house] %>
+  <%= member[:patronus] %>
+</section>
+<% end %>

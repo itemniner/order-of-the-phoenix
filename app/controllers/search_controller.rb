@@ -1,18 +1,14 @@
 class SearchController < ApplicationController
   def index
-    
-    response = Faraday.get('https://www.potterapi.com/v1/characters') do |f|
-      f.params['key'] = ENV['API_KEY']
-      f.params['house'] = params['house']
-      f.params['orderOfThePhoenix'] = true
-    end
-    @members = JSON.parse(response.body, symbolize_names: true)
-
+    service = PotterService.new(params['house'])
+    @members = service.members
+    Member.destroy_all
     @members.each do |member|
-      member[:name]
-      member[:role]
-      member[:house]
-      member[:patronus]
+      Member.create(name: member[:name], 
+                    role: member[:role],
+                    house: member[:house],
+                    patronus: member[:patronus]
+      )
     end
   end
 end
