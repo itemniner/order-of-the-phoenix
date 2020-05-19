@@ -7,6 +7,17 @@ RSpec.describe 'As a user' do
     select "Gryffindor", from: :house
 
     click_on 'Search For Members'
+
+    expect(current_path).to eq('/search')
+    expect(@members.count).to eq(21)
+    expect(page).to have_content("#{@members.count} members are in the Order of the Phoenix.")
+
+    within('#members') do
+      expect(page).to have_content(@member.name)
+      expect(page).to have_content(@member.role)
+      expect(page).to have_content(@member.house)
+      expect(page).to have_content(@member.patronus)
+    end
   end
 end
 
